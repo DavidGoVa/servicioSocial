@@ -1,0 +1,24 @@
+{% extends "@aragon_templates/Sitios/baseOneColumn.html.twig"%}
+
+{% block style_personalizador %}
+    <link rel="stylesheet" href="{{ asset('css/style-personalizador.css') }}" >
+{% endblock %} 
+
+{% block favicons %}
+    {% include 'Admin/Templates/faviconsPartial.html.twig' %} 
+{% endblock %}
+
+{% block logo_sitio %}
+    {% include '@aragon_templates/Sitios/instLogosPartial.html.twig' %}
+{% endblock %}
+
+{% block titulo_contenido %}
+    <img width="110" height="110" src="{{asset('bundles/aragontemplates/aragon/img/apps-logos/reins-web.png')}}"><br><br>
+{% endblock %}
+
+
+{% block footer_contenido %}
+    <footer class="text-center">                
+        Hecho en México, Universidad Nacional Autónoma de México (UNAM), todos los derechos reservados {{ "now" | date('Y') }}.<br><br>
+    </footer>
+{% endblock %}

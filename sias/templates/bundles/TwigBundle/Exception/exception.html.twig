@@ -1,0 +1,15 @@
+
+{% block body %}
+    <div class="container"><br><br>
+        <div class=" text-center">
+            <img src="{{asset('bundles/aragontemplates/aragon/img/inst-logos/unam_gris.svg')}}" alt="SIAS FES Aragon"><br><br>
+            <h1 class="title" style="font-size: 160px;">Excepción</h1>
+        </div>
+        <div class="list-group text-center" style="max-width: 700px; margin-left: auto; margin-right: auto;padding: 0 20px;">
+            <p href="#" class="list-group-item list-group-item-danger">
+                {{ exception.message }}
+            </p>  
+        </div>
+        <div class="clearfix"></div>
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends '@Twig/layout.html.twig' %}
+
+{% block titulo_pagina %}{%block titulo_seccion %}{%endblock%} Error 404 - SIAS FES Arag&oacute;n {% endblock %}
+
+{% block contenido %}
+    <div class="container"><br><br>
+        <div class=" text-center">
+            <img src="{{asset('bundles/aragontemplates/aragon/img/inst-logos/unam_gris.svg')}}" alt="SIAS FES Aragon"><br><br>
+            <h1 class="title" style="font-size: 160px;">404</h1>
+        </div>
+        <div class="text-center callout callout-danger lead">
+            {% if is_granted('ROLE_SUPER') == true %}
+                <h3>{{ exception.message }}</h3>  
+            {% endif %}
+            <h4>No encontramos la página que busca. Puede que la dirección está mal escrita o que la página ya no se encuentra disponible.</h4>{{ exception.message }}
+        </div>
+    </div>
+{% endblock %}

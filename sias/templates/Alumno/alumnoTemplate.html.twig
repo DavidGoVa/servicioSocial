@@ -1,0 +1,48 @@
+{%extends "@aragon_templates/Dashboard/baseNotSideBar.html.twig"%}
+
+{% block headScript %}
+    {# Dejar el slot vacio sobreescribe la configuracion de la libreria paje.js y no muestra las peticiones AJAX en el profiler de Symfony #}
+{% endblock %}
+
+{% block titulo_pagina %}{%block titulo_seccion %}{%endblock%} SIAS{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/site.css') }}">
+{% endblock %}
+
+{% block skinCss %}
+    <link rel="stylesheet" href="{{asset('bundles/aragontemplates/dashboard/dist/css/skins/skin-green-sias.css')}}">
+{% endblock skinCss %}
+
+{% block skinClass %}skin-green-sias{% endblock skinClass %}
+
+{%block favicons %}
+    {% include 'Alumno/faviconsPartial.html.twig' %}
+{% endblock %}   
+
+{% block nav_user_name %}     
+    {#<p class="text-white"><b>{{app.user.nombre}} {{app.user.primerApellido}} {{app.user.segundoApellido}}</b></p>#}
+{% endblock %}
+
+{% block user_full_name %}  
+    {#{{app.user.nombre}} {{app.user.primerApellido}} {{app.user.segundoApellido}}#}
+{% endblock %}
+
+{% block user_email %}         
+    {#{{ app.session.get( 'CUENTA') }}#}
+{% endblock %}
+
+
+{% block btn_salir %}
+    <a id="botonSalir" class="btn btn-block bg-gradient-info btn-sm" name="botonSalir" {#href="{{ logout_path() }}#}">SALIR</a>
+{% endblock %}
+
+{% block drop_menu_opciones %}
+{% endblock %}   
+
+
+{% block footer_contenido %}
+    <footer class="main-footer text-center">                
+        Hecho en México, Universidad Nacional Autónoma de México (UNAM), todos los derechos reservados {{ "now" | date('Y') }}.<br><br>
+    </footer>
+{% endblock %}

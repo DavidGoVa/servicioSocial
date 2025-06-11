@@ -1,0 +1,24 @@
+{%extends "@aragon_templates/Dashboard/baseAdminLogin.html.twig"%}
+
+{% block titulo_pagina %}SIAS - Inicio de Sesi&oacute;n{% endblock %}
+
+ {% block favicons %}
+     {% include 'Admin/Templates/faviconsPartial.html.twig' %} 
+{% endblock %}
+
+
+{% block stylesheets %}
+    <style> 
+        .login-page, .register-page {
+            background: #BDB701;
+        }
+        .login-logo h2{
+            color: #FFF;
+        }
+    </style>
+{% endblock %}
+
+
+{% block logo_app %} 
+    {% include '@aragon_templates/Sitios/instLogosPartial.html.twig' %}  
+{% endblock %} 

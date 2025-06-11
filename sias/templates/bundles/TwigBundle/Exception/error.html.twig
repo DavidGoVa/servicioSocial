@@ -1,0 +1,16 @@
+{% extends '@Twig/layout.html.twig' %}
+
+{% block titulo_pagina %}{%block titulo_seccion %}{%endblock%} Error 500 - FES Arag&oacute;n {% endblock %}
+
+{% block contenido %}
+    
+    <div class="container"><br><br>
+        <div class=" text-center">
+            <img src="{{asset('bundles/aragontemplates/aragon/img/inst-logos/unam_gris.svg')}}" alt="SIAS FES Aragon"><br><br>
+            <h1 class="title" style="font-size: 160px;">Error 500</h1>
+        </div>
+        <div class="text-center callout callout-danger lead">
+          <h4>Error 500 del servidor interno. Lo sentimos, pero algo salio mal...</h4>
+        </div>
+    </div>
+{% endblock %}

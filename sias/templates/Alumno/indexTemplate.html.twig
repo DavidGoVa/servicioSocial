@@ -1,0 +1,36 @@
+{%extends "@aragon_templates/Sitios/baseIndex.html.twig"%}
+
+{% block titulo_pagina %} SIAS {% endblock %}
+
+{% block style_personalizador %}
+    <link rel="stylesheet" href="{{ asset('css/style-personalizador.css') }}" >
+{% endblock %} 
+
+{%block favicons %}
+    {% include 'Alumno/faviconsPartial.html.twig' %}
+{% endblock %}
+
+{% block logo_sitio %}                                                 
+    {% include '@aragon_templates/Sitios/instLogosPartial.html.twig' %}
+{% endblock %}
+
+
+{% block menu_principal %}
+    {#{% include 'Alumno/Sitio/menuPartial.html.twig' %}#}
+{% endblock %}
+
+{% block presentacion_index %}
+    <img width="110" height="110" src="{{asset('bundles/aragontemplates/aragon/img/apps-logos/reins-web.png')}}" alt="KernelAragon"><br><br>
+    <h1 class="to-animate hero-animate-1">SIAS</h1>
+    <p class="to-animate hero-animate-3"><a href="#" class="btn btn-outline btn-lg">Iniciar Sesi&oacute;n</a></p>
+{% endblock %}
+
+{% block footer_enlaces %}	
+    {% include '@aragon_templates/Sitios/instServiciosPartial.html.twig' %}                             
+{% endblock %}
+
+{% block footer_contenido %}
+    <footer class="main-footer text-center">                
+        Hecho en México, Universidad Nacional Autónoma de México (UNAM), todos los derechos reservados {{ "now" | date('Y') }}.<br>
+    </footer>
+{% endblock %}

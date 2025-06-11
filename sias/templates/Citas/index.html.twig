@@ -1,0 +1,139 @@
+{% extends "Admin/administradorTemplate.html.twig" %}
+{% block titulo_seccion %}Validaciones de Inicio{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/aragontemplates/dashboard/bower/Calendar.js/calendar.js.min.css') }}">
+    
+{% endblock %}
+
+{% block titulo_contenido %}
+<style>
+        .modal-dialog {
+    margin-top: 15%;
+  }
+
+  @media (min-width: 768px) {
+    .modal-dialog {
+      margin: 15% auto;
+    }
+  }
+    </style>
+
+<div id="modalNotificacion" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <strong id="modal-notificacion-title" class="modal-title">Asignar Psicólogo</strong>
+      </div>
+      <div class="modal-body">
+        <p id="modal-notificacion-body"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div> 
+
+<div id="modalAsignacion" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <strong class="modal-title">Asignar Psicólogo</strong>
+      </div>
+      <div class="modal-body">
+        <div style="flex:1; display:flex; flex-direction:column; gap:1rem"  
+          <input type="hidden" id="idCita">
+          <h4 id="usuario_aragon_cita"></h4>
+          <small id="fecha_cita"></small>
+          <form method="PATCH" onsubmit="handleSubmit(event)" style="display:flex; flex-direction:column; gap:10px;">
+            <select id="psicologo-select" name="psicologo_id" class="form-control mb-2 mt-2">
+            {% for psicologo in psicologos %}
+              <option value="{{ psicologo.id }}">{{ psicologo.nombre }} {{psicologo.apellidos}}</option>
+            {% endfor %}
+            </select>
+            <div style="display:flex; justify-content: end; gap:10px;">
+              <button type="submit" value="rechazar" class="btn btn-sm btn-danger mt-2">Rechazar</button>
+              <button type="submit" id="botonAsignacion" value="asignar" class="btn btn-sm btn-success mt-2">Asignar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div> 
+    
+  Citas Solicitadas - Asesoría Psicológica
+        
+  {% endblock %}
+
+  {% block contenido %}
+  <div style="background-color: white; border-radius:1rem; padding: 5px 10px 20px 10px;">
+    <div style="display:flex; margin-top:2rem; margin-bottom: 10px;">
+      <div style="display:flex; flex-direction: column;width: 8em; margin-right: 2rem">
+        <small> Ciclo Escolar </small>
+        <select onchange="loadPeriodos(this.value)" style="width:100%;" id="ciclos" class="form-control">
+              {% for ciclo in ciclos %}
+              <option value="{{ciclo}}">{{ciclo}}</option>
+              {% endfor %}
+          </select>
+      </div>
+      
+      <div style="display:flex; flex-direction: column; width:16em; margin-right: 2rem">
+        <small> Periodo </small>    
+        <select style="width:100%;" onchange="loadCitas()" id="periodos" class="form-control">
+              
+        </select>
+      </div>
+
+      <div style="display:flex; flex-direction: column; width: 12em;">
+        <small> Estado </small>    
+        <select onchange="loadCitas()" style="width:100%;" class="form-control" id="estados">
+          <option>POR CONFIRMAR</option>
+          <option>ACEPTADA</option>
+          <option>CANCELADA</option>
+          <option>RECHAZADA</option>
+        </select>
+      </div>
+    </div>
+  
+      <div class="box">
+            <div class="content-table">
+              <table class="table table-bordered table-striped">
+                  <thead class="thead-dark">
+                      <tr>
+                          <th>No. Cuenta</th>
+                          <th>Alumno</th>
+                          <th>Horario Reservado</th>
+                          <th>Psicólogo Asignado</th>
+                          <th>Acciones</th>
+                      </tr>
+                  </thead>
+                  <tbody id="citas">
+                      
+                  </tbody>
+              </table>
+          </div>   
+      </div>
+    </div>
+
+  {% endblock %}
+  
+{% block scripts %}
+{#    <script src="{{asset('bundles/aragontemplates/dashboard/bower/Calendar.js/calendar.jquery.min.js')}}"></script>#}
+    <script src="{{asset('bundles/aragontemplates/dashboard/bower/Calendar.js/calendar.min.js')}}"></script>
+    <script src="{{ asset('js/funcionesCitas.js') }}"></script>
+    <script>
+        var calendarInstance1 = new calendarJs( "calendar", { manualEditingEnabled: true} );
+    </script>
+{% endblock %}
+
+              
+            
+
+        

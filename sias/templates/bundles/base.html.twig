@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="stylesheet" href="{{asset('bundles/aragontemplates/dashboard/bower/bootstrap/dist/css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{ asset('css/general.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/site.css') }}">
+    {% block stylesheets %}{% endblock %}
+    <link href="{{ asset('favicon.ico') }}" rel="shortcut icon">
+</head>
+<body>
+    <div id="contenedor" class="container-fluid">
+        <!--INICIA ENCABEZADOS DEL SITIO-->
+        <div id="cabecera" class="row">
+            <div id="wrapper">
+            <img src="{{ asset('images/header-inscripciones.jpg') }}" alt=""  width="100%"/>
+            </div>
+        </div>
+
+        <div id="navegacion" class="row">
+            <div class="col-md-11">
+                <div class="btn-group">
+                    {%block menu %} 
+                        &nbsp;
+                    {% endblock %}    
+                </div>
+            </div>
+                <div style="text-align: right;" class="col-md-1" id="user_menu">
+                {%block user_menu %} 
+                    &nbsp;
+                {% endblock %}    
+            </div>
+        </div>
+
+        <div id="central">
+            <div id="principal" class="col-xs-12 col-md-12 col-lg-12" >
+                <!--INICIA CONTENIDO CENTRAL DEL SITIO-->
+            {% block body %}{% endblock %}
+            <!--TERMINA CONTENIDO CENTRAL DEL SITIO-->
+        </div>
+    </div>
+
+
+    <!--INICIA PIE DE PAGINA DEL SITIO-->
+    <div id="pie" class="row">
+        <div class="col-md-6">
+            Hecho en M&eacute;xico, todos los derechos reservados 2014.
+            Esta p&aacute;gina puede ser reproducida con fines no lucrativos, 
+            siempre y cuando no se mutile, se cite la fuente completa y su dirección electr&oacute;nica. 
+            De otra forma requiere permiso previo por escrito de la instituci&oacute;n.
+        </div>
+        <div class="col-md-6">
+            Sitio web administrado por: <b>Unidad de Administración Escolar Iztacala</b>
+            <br />
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="{{asset('bundles/aragontemplates/dashboard/bower/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+{% block javascripts %}{% endblock %}
+</body>
+</html>

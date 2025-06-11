@@ -1,0 +1,83 @@
+{%extends "@aragon_templates/Dashboard/baseBlankPage.html.twig"%}
+
+{% block headScript %}
+    {# Dejar el slot vacio sobreescribe la configuracion de la libreria paje.js y no muestra las peticiones AJAX en el profiler de Symfony #}
+{% endblock %}
+
+{% block titulo_pagina %}{%block titulo_seccion %}{%endblock%} - SIAS{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/site.css') }}">
+{% endblock %}
+
+{% block skinCss %}
+    <link rel="stylesheet" href="{{asset('bundles/aragontemplates/dashboard/dist/css/skins/skin-green-sias.css')}}">
+{% endblock skinCss %}
+
+{% block skinClass %}skin-green-sias{% endblock skinClass %}
+
+{%block favicons %}
+    {% include 'Admin/faviconsPartial.html.twig' %}
+{% endblock %}
+
+{% block nav_user_name %}                            
+    {#{{app.user.nombre}} {{app.user.apellidoPaterno}} {{app.user.apellidoMaterno}}#}
+{% endblock %}
+
+{% block user_full_name %}  
+    {#{{app.user.nombre}} {{app.user.apellidoPaterno}} {{app.user.apellidoMaterno}}#}
+{% endblock %}
+
+{% block user_email %}         
+    {#{{app.user.username}}#}
+{% endblock %}
+
+
+{% block btn_salir %}
+    <a {#href="{{ logout_path() }}"#} class="btn btn-default btn-flat">Salir</a>
+{% endblock %}  
+
+{% block logo_app %}     
+    {#<div class="pull-left image">
+        <img width="45" height="45" src="{{asset('bundles/aragontemplates/aragon/img/apps-logos/reins-saml-color.png')}}" alt="Logo">
+    </div>
+    <div class="pull-left info">
+        <img src="{{asset('bundles/aragontemplates/aragon/img/apps-logos/reins-nombre-color.png')}}" alt="Logo">            
+    </div> #}
+{% endblock %}
+
+{# Colocar las secciones con su ruta #}
+{% block menu_principal %}
+
+        <li>
+            <a href="/admin/citas">
+                <i class="fa fa-cogs"></i> <span>Citas</span>            
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa fa-cogs"></i> <span>Historia Clínica Psicol&oacute;gica</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa fa-list"></i> <span>Periodos</span>            
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa fa-group"></i> <span>Psic&oacute;logos</span>            
+            </a>
+        </li>
+        <li>
+            <a href="/admin/historial-alumno/6000001">
+                <i class="fa fa-user"></i> <span>Historial Alumno</span>            
+            </a>
+        </li>
+
+        
+
+{% endblock menu_principal %}

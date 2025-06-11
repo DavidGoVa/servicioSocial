@@ -1,0 +1,26 @@
+{% extends "Admin/administradorTemplate.html.twig" %}
+{% block titulo_seccion %}Validaciones de Inicio{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/aragontemplates/dashboard/bower/Calendar.js/calendar.js.min.css') }}">
+{% endblock %}
+
+{% block titulo_contenido %}
+    Validaciones de Inicio
+{% endblock %}
+
+{% block contenido %}
+    <div class="box"> 
+        <div class="box-body">
+            <div id="calendar"></div>
+        </div>       
+    </div>
+
+{% endblock %}
+{% block scripts %}
+{#    <script src="{{asset('bundles/aragontemplates/dashboard/bower/Calendar.js/calendar.jquery.min.js')}}"></script>#}
+    <script src="{{asset('bundles/aragontemplates/dashboard/bower/Calendar.js/calendar.min.js')}}"></script>
+    <script>
+        var calendarInstance1 = new calendarJs( "calendar", { manualEditingEnabled: true} );
+    </script>
+{% endblock %}

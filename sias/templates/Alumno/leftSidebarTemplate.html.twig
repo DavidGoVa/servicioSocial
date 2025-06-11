@@ -1,0 +1,17 @@
+{% extends "@aragon_templates/Sitios/baseLeftSidebar.html.twig"%}
+{% block favicons %}
+    {% include 'Alumno/Templates/faviconsPartial.html.twig' %} 
+{% endblock %}
+
+{% block style_personalizador %}
+    <link rel="stylesheet" href="{{ asset('css/style-personalizador.css') }}" >
+{% endblock %} 
+
+{% block logo_sitio %}
+    {% include '@aragon_templates/Sitios/instLogosPartial.html.twig' %}
+{% endblock %}
+
+{% block menu_principal %}
+    {% include 'Alumno/Sitio/menuPartial.html.twig' %}
+{% endblock %}
+

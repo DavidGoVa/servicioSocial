@@ -1,0 +1,5 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: Aragon\SIAS\Controller
+    type: attribute

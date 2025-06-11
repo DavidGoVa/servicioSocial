@@ -1,0 +1,275 @@
+{% extends "Admin/administradorTemplate.html.twig" %}
+{% block titulo_seccion %}Validaciones de Inicio{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/aragontemplates/dashboard/bower/Calendar.js/calendar.js.min.css') }}">
+    
+{% endblock %}
+
+{% block titulo_contenido %}
+<style>
+        .modal-dialog {
+    margin-top: 15%;
+  }
+
+  .smth{
+    font-size: 15px;
+  }
+
+  @media (min-width: 768px) {
+    .modal-dialog {
+      margin: 15% auto;
+    }
+  }
+    </style>
+
+<div id="modalNotificacion" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <strong id="modal-notificacion-title" class="modal-title">Asignar Psicólogo</strong>
+      </div>
+      <div class="modal-body">
+        <p id="modal-notificacion-body"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modalContactosEmergencia" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <strong class="modal-title">Contactos de Emergencia</strong>
+      </div>
+      <div class="modal-body p-4">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered align-middle">
+                <thead class="table-primary">
+                    <tr>
+                        <th class="text-center smth">Parentesco</th>                                        
+                        <th class="text-center smth">Nombre</th>
+                        <th class="text-center smth">Apellido Paterno</th>
+                        <th class="text-center smth">Apellido Materno</th>
+                        <th class="text-center smth">Teléfono</th>                                        
+                    </tr>
+                </thead>
+                <tbody id="bodyContactosEmergencia">
+                                                
+                </tbody>
+            </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modalEliminarNota" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <strong class="modal-title">¿Seguro que quieres eliminar esta nota?</strong>
+      </div>
+      <div class="modal-body">
+      <input type="hidden" id="idCitaEliminar">
+      <input type="hidden" id="idNotaEliminar">
+      <button class="btn btn-danger" onclick="eliminarNota()">Si, Eliminar</button> 
+      <button class="btn btn-success" data-dismiss="modal">No, Conservar</button> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div> 
+  Historial del Alumno      
+{% endblock %}
+
+{% block contenido %}
+    <div style="background-color:white; border-radius: 1rem; padding: 10px; "> 
+        <div class="content-table">
+            <div style="display:flex; justify-content:space-around; margin-top:2rem; background-color:rgba(255, 181, 131, 0.4)">
+                <table style="border-collapse: separate; border-spacing: 1rem; width: 100%;">
+                    <tr>
+                        <td>Nombre:  {{alumno.nombre}} {{alumno.apellidos}}</td>
+                        <td>Número de cuenta: {{alumno.id}}</td>
+                        <td><button style="background-color:rgba(169, 164, 166, 0.4)" class="btn">Programar Cita</button></td>
+                    </tr>
+                    <tr>
+                        <td>Número telefónico: {{alumno.fichaIdentificacionAlumno.telefonoCelular}}</td>
+                        <td>Carrera: 
+                        {% set primeraCarrera = alumno.carreras.first() %}
+                            {% if primeraCarrera %}
+                            {{ primeraCarrera.nombre }}
+                        {% endif %}</td>
+                        <td><button style="background-color:rgba(169, 164, 166, 0.4)" class="btn">Registrar Seguimiento</button></td>
+                        
+                    </tr>
+                    <tr>
+                        <td>Email: {{alumno.username}}</td>
+                        <td>Turno: {{alumno.fichaIdentificacionAlumno.turno}}</td>
+                        <td><button style="background-color:rgba(255, 131, 195, 0.4)" onclick="$('#modalContactosEmergencia').modal('show');" class="btn">Consultar Contactos de Emergencia</button></td>
+                    </tr>
+                    <tr>
+                        <td>NSS: {{alumno.fichaIdentificacionAlumno.noSeguroSocial}}</td>
+                        <td>Fecha de nacimiento: {{alumno.fichaIdentificacionAlumno.fechaNacimiento|date('d/m/Y')}}</td>
+                        <td><button style="background-color:rgba(65, 100, 239, 0.4)" class="btn">Consultar Información Académica</button></td>
+                    </tr>
+                    <tr>
+                        
+                        <td>UMF Asignada: {{alumno.fichaIdentificacionAlumno.unidadMedicaFamiliar}}</td>
+                        <td></td>
+                        <td><button onclick="window.open('') style="background-color:rgba(169, 164, 166, 0.4)" class="btn">Impresión de Documentos</button></td>
+                    </tr>
+                </table>
+            </div>  
+            <hr style="border: 1px solid black;">
+            <div> 
+                <div class="content-table" style="font-family: Arial, sans-serif;">
+                    <!-- Encabezado principal -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3 style="margin: 0;">Resultado de Escalas</h3>
+                        <strong>Fecha de Aplicación: 10/05/2026</strong>
+                    </div>
+
+                    <!-- Tablas lado a lado -->
+                    <div style="display: flex; gap: 2rem;">
+
+                        <!-- Tabla DASS-21 -->
+                        <table style="border-collapse: collapse; width: 50%; border: 1px solid #ccc;">
+                            <thead style="background-color: #d3d3d3;">
+                                <tr>
+                                    <th colspan="2" style="border: 1px solid #ccc; padding: 8px; text-align: left;">DASS-21</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">Nivel de Depresión</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">{{alumno.fichaIdentificacionAlumno.nivelDepresion}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">Nivel de Ansiedad</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">{{alumno.fichaIdentificacionAlumno.nivelAnsiedad}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">Nivel de estrés</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">{{alumno.fichaIdentificacionAlumno.nivelEstres}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table style="border-collapse: collapse; width: 50%; border: 1px solid #ccc;">
+                            <thead style="background-color: #d3d3d3;">
+                                <tr>
+                                    <th colspan="2" style="border: 1px solid #ccc; padding: 8px; text-align: left;">ASQ MODORIS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">Nivel de riesgo suicida</td>
+                                    <td style="border: 1px solid #ccc; padding: 8px;">{{alumno.fichaIdentificacionAlumno.nivelRiesgoSuicida}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <hr style="border: 1px solid black;">
+            <div>
+                <div style="flex: 1; display: flex;">
+                    <div style="width:50%; padding-right: 20px;">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" style="width: 100%;">
+                                <thead style="background-color: #d3d3d3 !important;">
+                                <tr class="active">
+                                    <th class="text-center" style="width: 40%;">Documento</th>
+                                    <th class="text-center" style="width: 30%;">Fecha de Cargar</th>
+                                    <th class="text-center" style="width: 30%;">Descarga</th>
+                                </tr>
+                                </thead>
+                                <tbody id="bodyDocumentos">
+                                {% for archivo in archivos %}
+                                <tr>
+                                    <td>{{archivo.tipoDocumento}}</td>
+                                    <td>{{archivo.createdAt|date('Y-m-d H:i')}}</td>
+                                    <td><a href="#" onclick="descargarDocumento({{archivo.id}}, '{% set primeraCarrera = alumno.carreras.first() %}{% if primeraCarrera %}{{ primeraCarrera.abreviatura }}{% endif %}', {{ alumno.fechaAlta|date("Y") }}, {{alumno.id}})">Descargar</a></td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; width:50%;">
+                        Cargar nuevo documento
+                        <input id="archivo" onchange="verSiHayArchivo()" style="margin-bottom: 10px;" class="form-control" type="file">
+                        Descripción del documento
+                        <textarea id="descripcionArchivo" style="margin-bottom: 10px;" class="form-control"></textarea>
+                        <button data-generacion='{{ alumno.fechaAlta|date("Y") }}' data-carrera="{% set primeraCarrera = alumno.carreras.first() %}{% if primeraCarrera %}{{ primeraCarrera.abreviatura }}{% endif %}" data-numerocuenta="{{alumno.id}}" id="btnEnviarArchivo" onclick="subirArchivo(this); cargarArchivosAlumno(this)" style="width:6rem;" type="submit" disabled>Enviar</button>
+                    </div>
+                </div>
+            </div>
+            <hr style="border: 1px solid black;">
+            {% for registroCita in registroCitas %}
+            <div style="flex:1; border: 1px solid black; padding:20px; margin-bottom: 20px;">
+                <div style="display:flex; justify-content: space-between;">
+                    <strong>Programa: {{ registroCita.citas.tipoPrograma.nombre }}</strong>
+                    <strong>Fecha: {{ registroCita.citas.fechaAtencion|date('d/m/Y') }}</strong>
+                </div>
+                <div style="display:flex; justify-content: space-between; margin-bottom:15px;">
+                    <strong>Psicólogo: {{ registroCita.psicologo.nombre }} {{ registroCita.psicologo.apellidos }}</strong>
+                    <div >
+                        Asistió<input onchange="confirmarAsistencia({{registroCita.id}}, this.value)" value="si" type="radio" name="asistio_{{ registroCita.id }}" {% if registroCita.asistio == true %}checked{% endif %}>
+                        No asistió<input onchange="confirmarAsistencia({{registroCita.id}}, this.value)" value="no" type="radio" name="asistio_{{ registroCita.id }}" {% if registroCita.asistio == false %}checked{% endif %}>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content: space-between; padding-right:36vw;  margin-bottom:5px;">
+                    <strong>Notas:</strong>
+                </div>
+                {% for nota in registroCita.notas %}
+                <div id="notaElemento{{nota.id}}" style="display:flex; justify-content: space-between; margin-bottom: 15px;">
+                    <div id="divNotaP{{nota.id}}" style="flex:1; padding:20px; margin-right:10px;">
+                        <div id="divNotaC{{nota.id}}" style="flex: 1; border: 1px solid black; border-radius:5px;">
+                            <div style="display:flex; justify-content: end; margin-bottom:5px; margin-right:10px;">
+                                <strong>{{ nota.createdAt|date("d/m/Y H:i")}}</strong>
+                            </div>
+                            <article id="contenidoNota{{nota.id}}" style="flex:1; padding: 15px;">
+                                {{ nota.descripcion }}
+                            </article>
+                            <div style="display:flex; justify-content: start; margin-bottom:5px; margin-right:10px;">
+                                <button class="btn btn-default" style="margin-right: 20px; margin-left:10px;" onclick="editarNota({{registroCita.id}}, {{nota.id}})">Editar</button>                           
+                                <button class="btn btn-default" onclick="showEliminarNota({{registroCita.id}}, {{nota.id}})">Eliminar</button>                           
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+                {% endfor %}
+
+                <button class="btn btn-default" onclick="nuevaNota({{registroCita.id}})">+ Nueva Nota</button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{#    <script src="{{asset('bundles/aragontemplates/dashboard/bower/Calendar.js/calendar.jquery.min.js')}}"></script>#}
+    <script src="{{asset('bundles/aragontemplates/dashboard/bower/Calendar.js/calendar.min.js')}}"></script>
+    <script src="{{asset('js/funcionesHistorialAlumno.js')}}"></script>
+    <script>
+        var calendarInstance1 = new calendarJs( "calendar", { manualEditingEnabled: true} );
+    </script>
+{% endblock %}
+
+              
+            
+
+        
