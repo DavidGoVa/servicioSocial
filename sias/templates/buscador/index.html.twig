@@ -1,0 +1,61 @@
+{% extends "Admin/administradorTemplate.html.twig" %}
+{% block titulo_seccion %}Validaciones de Inicio{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}
+
+{% block titulo_contenido %}
+Buscar Alumno - Asesoría Psicológica
+{% endblock %}
+
+{% block contenido %}
+
+<style>
+  .opcionAlumno{
+    border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  background-color: white;
+  transition: background-color 0.2s ease;
+  }
+</style
+<div style="background-color: white; border-radius:1rem; padding: 5px 10px 20px 10px; max-width: 800px; margin: 0 auto;">
+
+
+    <div style="flex:1; display:flex; flex-direction: column; margin-bottom:10px; border: 3px solid black; border-radius: 1rem; padding: 20px;">
+        
+  
+        <input id="inputBusqueda"
+               type="text"
+               class="form-control"
+               placeholder="Nombre completo (ej. BRYAN RAMOS)"
+               oninput="buscarAlumno(this)"
+               style="border: 2px solid black; font-weight: bold;" />
+
+      
+        <div id="mensajeInicial" style="text-align: center; margin: 15px 0; font-weight: bold;">
+            <i class="fa fa-search" style="font-size: 30px;"></i>
+            <p>Escribe nombre / número de cuenta del alumno</p>
+        </div>
+
+        
+        <div id="resultadoAlumnos"
+             style="margin-top: 15px;
+                    border: 2px solid white;
+                    border-radius: 10px;
+                    background-color: #f9f9f9;
+                    padding: 15px;
+                    display: none;">
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ asset('js/funcionesBuscadorAlumnos.js') }}"></script>
+{% endblock %}
+
+

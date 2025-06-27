@@ -31,4 +31,43 @@ class UsuarioAragonRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAlumnos(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->innerJoin('u.roles', 'r')
+            ->where('r.id IN (:roles)')
+            ->setParameter('roles', [RolAragon::ROLE_ALUMNO])
+            ->getQuery()
+            ->getResult();
+    }
+
+
+public function buscarAlumnosAvanzado(?string $busqueda = null): array
+{
+    $qb = $this->createQueryBuilder('a');
+
+    if ($busqueda) {
+        $palabras = preg_split('/\s+/', trim($busqueda));
+        foreach ($palabras as $index => $palabra) {
+            $condicion = $qb->expr()->orX(
+                $qb->expr()->like('UPPER(a.nombre)', ":palabra$index"),
+                $qb->expr()->like('UPPER(a.apellidos)', ":palabra$index"),
+                $qb->expr()->like('UPPER(a.id)', ":palabra$index")
+            );
+
+            $qb->andWhere($condicion)
+               ->setParameter("palabra$index", '%' . strtoupper($palabra) . '%');
+               
+        }
+    }
+
+    $qb->orderBy('a.nombre', 'ASC')
+       ->setMaxResults(50);
+
+    return $qb->getQuery()->getResult();
+}
+
+
+
 }

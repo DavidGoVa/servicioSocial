@@ -154,7 +154,8 @@ function loadCitas() {
         nuevaFila.appendChild(tdIdUsuarioAragon);
 
         const tdNombreUsuarioAragon = document.createElement('td');
-        tdNombreUsuarioAragon.textContent = item.usuario_aragon_nombre + " " + item.usuario_aragon_apellidos;
+        tdNombreUsuarioAragon.innerHTML = `<a href="historial-alumno/${item.usuario_aragon_id}">${item.usuario_aragon_nombre} ${item.usuario_aragon_apellidos}</a>`;
+        console.log(tdNombreUsuarioAragon);
         nuevaFila.appendChild(tdNombreUsuarioAragon);
 
         const tdFechaCita = document.createElement('td');
